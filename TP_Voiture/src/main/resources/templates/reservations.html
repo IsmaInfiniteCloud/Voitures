@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <title>Gestion de Reservations</title>
+</head>
+<body>
+<div class="container-fluid text-center">
+<h1>Gestion de Reservations</h1>
+<div class="m-2">
+    <a class="h3" th:href="@{/reservations/new}">Add new Reservation</a>
+</div>
+    <div th:if="${message}" class="alert alert-success text-center">
+        [[${message}]]
+    </div>
+<table class="table table-striped" style="max-width: 1600px;margin: 0 auto;">
+    <tr class="table-dark">
+            <th>Reservations date</th>
+            <th>Circulation date</th>
+            <th>Return date</th>
+            <th>Voiture  Model</th>
+            <th>Voiture  Price</th>
+            <th>Persone Reserve</th>
+            <th>Details</th>
+            <th>Editer</th>
+            <th>Retour</th>
+        </tr>
+    <tr th:each="reservation : ${listReservation}" class="table-info">
+        <td th:text="${reservation.getDateReservation()}"/>
+        <td th:text="${reservation.getDateCirculation()}"/>
+        <td th:text="${reservation.getDateRetour()}"/>
+        <td th:text="${reservation.getVoiture().getModel()}"/>
+        <td th:text="${reservation.getVoiture().getPrice()}"/>
+        <td th:text="${reservation.getClient().getPrenom()}"/>
+        <td><a class="h4 mr-3" th:href="@{'/reservations/detail/'+${reservation.idReservation}}">Details</a></td>
+        <td><a class="h4 mr-3" th:href="@{'/reservations/editer/'+${reservation.idReservation}}">Editer</a></td>
+        <td><a class="h4 mr-3" th:href="@{'/reservations/effacer/'+${reservation.idReservation}}">Retourner Auto</a></td>
+    </tr>
+</table>
+    <div>
+        <a class="h3" th:href="@{/}">Retour</a>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-fluid text-center" style="max-width: 1500px;margin: 0 auto;">
+    <h1 class="text-center fw-bold fs-1">Gestion de location de Voitures</h1>
+    <div th:class="m-2">
+        <a th:class="h3" th:href="@{/reservations}">
+            Gestion Reservations</a>
+    </div>
+    <div th:class="m-2">
+        <a th:class="h3" th:href="@{/voitures}">
+            Gestion Voitures</a>
+    </div>
+    <div th:class="m-2">
+        <a th:class="h3" th:href="@{/clients}">
+            Gestion Clients</a>
+    </div>
+
+    <div th:if="${message}" class="alert alert-success text-center">
+        [[${message}]]
+    </div>
+    <form form th:action="@{/index/search}" method="post" th:object="${option}" style="max-width: 600px;margin: 0 auto;">
+        <div class="container">
+            <div class="row g-2">
+                <div class="input-group flex-wrap">
+                    <span class="input-group-text" id="addon-wrapping1">Model</span>
+                    <input type="text" th:field="*{model}" class="form-control"   minlength="2" maxlength="45" placeholder="model" aria-label="model" aria-describedby="addon-wrapping1"/>
+                    <span class="input-group-text" id="addon-wrapping2">Milage</span>
+                    <input type="number" th:field="*{milage}" class="form-control"   min="1" placeholder="milage" aria-label="Milage" aria-describedby="addon-wrapping2"/>
+                </div>
+            </div>
+            <div class="row g-2">
+                <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping4">Prix</span>
+                    <input th:field="*{prix}" type="number" class="form-control" placeholder="Prix"  min="1" aria-label="Prix" aria-describedby="addon-wrapping"/>
+                    <button class="btn btn-primary me-md-2 btn-lg" type="submit">Rechercher</button>
+                </div>
+            </div>
+            <!-- Top middle div "Filters Voitures "-->
+
+        </div>
+    </form>
+
+    <table class="table table-striped">
+        <tr class="table-warning">
+            <th>Voiture Model</th>
+            <th>Année</th>
+            <th>Milage</th>
+            <th>Licence</th>
+            <th>Prix</th>
+            <th>Options</th>
+        </tr>
+        <tr th:each="voiture : ${listVoiture}" class="table-info">
+
+            <td th:text="${voiture.model}"/>
+            <td th:text="${voiture.annee}"/>
+            <td th:text="${voiture.mileage}"/>
+            <td th:text="${voiture.licence}"/>
+            <td th:text="'$'+ ${voiture.price}"/>
+            <td th:if="${voiture.rented}">
+                <a class="h4 mr-3" th:href="@{'/voitures/detail/'+${voiture.idVoiture}}">Details de Reserve</a>
+            </td>
+            <td th:unless="${voiture.rented}">
+                <a class="h4 mr-3" th:href="@{/reservations/new}">Reserver</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+</body>
+</html>
